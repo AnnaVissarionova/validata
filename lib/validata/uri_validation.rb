@@ -10,6 +10,22 @@ module Validata
       valid_scheme?(uri) && valid_hier_part?(uri) && domain_exists?(uri.host)
     end
 
+    def self.validation_comment(uri)
+      uri = parse_uri(uri)
+      if uri.nil?
+        "Invalid URL format"
+      else
+        if !valid_scheme?(uri)
+          return "Invalid scheme"
+        elsif !valid_hier_part?(uri)
+          return "Empty or invalid hier-part"
+        elsif !domain_exists?(uri.host)
+          return "Domain doesn't exist"
+        else
+          return "Valid URL"
+        end
+      end
+    end
 
     private
 

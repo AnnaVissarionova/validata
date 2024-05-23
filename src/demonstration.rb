@@ -13,6 +13,7 @@ emails = [
 ]
 emails.each do |email|
   puts "#{email}: #{Validata::EmailValidation.valid?(email)}"
+  puts "Comment: #{Validata::EmailValidation.validation_comment(email)}"
 end
 puts ""
 
@@ -28,6 +29,7 @@ phone_nums = [
 ]
 phone_nums.each do |num|
   puts "#{num}: #{Validata::PhoneNumberValidation.valid?(num)}"
+  puts "Comment: #{Validata::PhoneNumberValidation.validation_comment(num)}"
 end
 puts ""
 
@@ -46,4 +48,6 @@ urls = [
 
 urls.each do |url|
   puts "#{url}: #{Validata::URIValidation.valid?(url)}"
+  puts "Comment: #{Validata::URIValidation.validation_comment(url)}"
+
 end
