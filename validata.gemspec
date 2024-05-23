@@ -16,5 +16,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop', '~> 1.63'
   spec.add_development_dependency 'rubocop-performance', '~> 1.5'
   spec.add_development_dependency 'rubocop-rspec', '~> 1.37'
-  spec.add_development_dependency 'iso_country_codes', '~> 0.7.8'
 end
