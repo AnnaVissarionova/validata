@@ -1,11 +1,15 @@
-require 'resolv'
+# frozen_string_literal: true
+
+require "resolv"
 
 module Validata
+  # This module allows to validate emails
   module EmailValidation
     PATTERN = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+
     def self.valid?(email)
-      if email =~ PATTERN
-        domain = email.split('@').last
+      if email.match?(PATTERN)
+        domain = email.split("@").last
         valid_domain?(domain)
       else
         false
@@ -13,27 +17,22 @@ module Validata
     end
 
     def self.validation_comment(email)
-      if email =~ PATTERN
-        return "Valid email address"
+      return "Valid email address" if email.match?(PATTERN)
+
+
+      potential_email = email.gsub(/\s+/, "").downcase
+      return "Invalid email address. You forget to include the '@' symbol." unless email.include?("@")
+
+      if potential_email.split("@").first.empty?
+        "Invalid email address. Missing username before '@'."
+      elsif potential_email.split("@").last.empty?
+        "Invalid email address. Missing domain after '@'."
+      elsif potential_email.split("@").last.split(".").length < 2
+        "Invalid email address. Missing third-level domain."
       else
-        potential_email = email.gsub(/\s+/, "").downcase
-        if email.include?("@")
-          if potential_email.split('@').first.empty?
-            return "Invalid email address. Missing username before '@'."
-          elsif potential_email.split('@').last.empty?
-            return "Invalid email address. Missing domain after '@'."
-          elsif potential_email.split('@').last.split('.').length < 2
-            return "Invalid email address. Missing third-level domain."
-          else
-            return "Invalid email address. Domain '#{potential_email.split('@').last}' does not exist."
-          end
-        else
-          return "Invalid email address.You forget to include the '@' symbol."
-        end
+        "Invalid email address. Domain '#{potential_email.split("@").last}' does not exist."
       end
     end
-
-    private
 
     def self.valid_domain?(domain)
       mx_records_exist?(domain) || a_record_exists?(domain)
