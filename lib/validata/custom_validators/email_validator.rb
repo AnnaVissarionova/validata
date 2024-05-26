@@ -1,19 +1,19 @@
-# frozen_string_literal: true
 
 module Validata
   module CustomValidators
     # This class allows to set custom email validation rules
     class EmailValidator
-      attr_reader :name, :pattern, :max_length, :min_length, :allowed_domains, :blocked_domains
+      attr_reader :name, :pattern, :max_length, :min_length, :allowed_domains, :blocked_domains, :check_mx_records
 
       def initialize(name, pattern: nil, max_length: 254, min_length: 5,
-                     allowed_domains: [], blocked_domains: [])
+                     allowed_domains: [], blocked_domains: [], check_mx_records: true)
         @name = name
         @pattern = pattern || EmailValidation::PATTERN
         @max_length = max_length
         @min_length = min_length
         @allowed_domains = allowed_domains
         @blocked_domains = blocked_domains
+        @check_mx_records = check_mx_records
       end
 
       def valid?(email)
@@ -21,7 +21,7 @@ module Validata
           validate_length(email) &&
           validate_allowed_domains(email) &&
           validate_blocked_domains(email) &&
-          validate_mx_records(email)
+          (!check_mx_records || validate_mx_records(email))
       end
 
       private
