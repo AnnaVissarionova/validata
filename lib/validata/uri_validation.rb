@@ -1,9 +1,12 @@
-require 'resolv'
-require 'uri'
+# frozen_string_literal: true
+
+require "resolv"
+require "uri"
 
 module Validata
+  # This module allows to validate URI
   module URIValidation
-    VALID_SCHEMES = %w[http https ftp ftps]
+    VALID_SCHEMES = %w[http https ftp ftps].freeze
 
     def self.valid?(url)
       uri = parse_uri(url)
@@ -14,20 +17,16 @@ module Validata
       uri = parse_uri(uri)
       if uri.nil?
         "Invalid URL format"
+      elsif !valid_scheme?(uri)
+        "Invalid scheme"
+      elsif !valid_hier_part?(uri)
+        "Empty or invalid hier-part"
+      elsif !domain_exists?(uri.host)
+        "Domain doesn't exist"
       else
-        if !valid_scheme?(uri)
-          return "Invalid scheme"
-        elsif !valid_hier_part?(uri)
-          return "Empty or invalid hier-part"
-        elsif !domain_exists?(uri.host)
-          return "Domain doesn't exist"
-        else
-          return "Valid URL"
-        end
+        "Valid URL"
       end
     end
-
-    private
 
     def self.parse_uri(url)
       URI.parse(url)
@@ -49,7 +48,7 @@ module Validata
         result = dns.getresources(host, Resolv::DNS::Resource::IN::A)
       end
       !result.empty?
-    rescue
+    rescue StandardError
       false
     end
   end
