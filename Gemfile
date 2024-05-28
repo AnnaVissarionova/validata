@@ -3,7 +3,7 @@
 source "http://rubygems.org"
 gemspec
 
-gem "rake", "~> 13.2"
+gem 'rake', '~> 13.2', '>= 13.2.1'
 gem "rspec", "~> 3.13"
 gem "rubocop", "~> 1.64"
 gem "rubocop-performance", "~> 1.21"
