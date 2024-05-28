@@ -32,7 +32,7 @@ RSpec.describe Validata::URIValidation do
     end
 
     it 'returns message for an invalid URL with non-existent domain' do
-      expect(described_class.validation_comment('http://nonexistentdomain.com')).to eq("Domain doesn't exist")
+      expect(described_class.validation_comment('http://nonexistentdomain555.com')).to eq("Domain doesn't exist")
     end
   end
 
