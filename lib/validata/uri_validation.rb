@@ -39,7 +39,7 @@ module Validata
     end
 
     def self.valid_hier_part?(uri)
-      uri.host && !uri.host.empty?
+      !uri.host.empty?
     end
 
     def self.domain_exists?(host)
