@@ -99,7 +99,8 @@ module Validata
       end
 
       def extract_country_code(phone)
-        phone.match(country_code_pattern)[1]
+        match_data = country_code_pattern.match(phone)
+        match_data ? match_data[1] : nil
       end
 
       def extract_region_code(phone)

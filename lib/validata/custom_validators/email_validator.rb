@@ -1,4 +1,5 @@
 
+require_relative '../email_validation'
 module Validata
   module CustomValidators
     # This class allows to set custom email validation rules
@@ -8,7 +9,7 @@ module Validata
       def initialize(name, pattern: nil, max_length: 254, min_length: 5,
                      allowed_domains: [], blocked_domains: [], check_mx_records: true)
         @name = name
-        @pattern = pattern || EmailValidation::PATTERN
+        @pattern = pattern || Validata::EmailValidation::PATTERN
         @max_length = max_length
         @min_length = min_length
         @allowed_domains = allowed_domains

@@ -40,25 +40,25 @@ module Validata
       def validate_uppercase(password)
         return true unless @require_uppercase
 
-        password.match(/[A-Z]/)
+        !!password.match(/[A-Z]/)
       end
 
       def validate_lowercase(password)
         return true unless @require_lowercase
 
-        password.match(/[a-z]/)
+        !!password.match(/[a-z]/)
       end
 
       def validate_digit(password)
         return true unless @require_digit
 
-        password.match(/\d/)
+        !!password.match(/\d/)
       end
 
       def validate_special(password)
         return true unless @require_special
 
-        password.match(SPECIAL_CHARACTERS)
+        !!password.match(SPECIAL_CHARACTERS)
       end
 
       def validate_blocked_chars(password)
